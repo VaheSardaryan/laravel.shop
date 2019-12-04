@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,15 +30,27 @@ class ProductsController extends Controller
         return view('products.create');
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|min:3|max:191',
+            'description' => 'max:191',
+            'price' => 'required|between:0,9999999.99'
+        ]);
+
+        Product::query()->create([
+            'user_id' => Auth::id(),
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+            'price' => $request->get('price')
+        ]);
+
+        return redirect()->route('products.index');
     }
 
     /**
@@ -61,7 +73,13 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        return view('products.edit');
+        $product = Product::query()->findOrFail($id);
+
+        if($product->isProductOf(Auth::user())) {
+            return view('products.edit', compact('product'));
+        }else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -73,7 +91,24 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|min:3|max:191',
+            'description' => 'max:191',
+            'price' => 'required|between:0,9999999.99'
+        ]);
+
+        $product = Product::query()->findOrFail($id);
+        if($product->isProductOf(Auth::user())) {
+            $product->update([
+                'name' => $request->get('name'),
+                'description' => $request->get('description'),
+                'price' => $request->get('price')
+            ]);
+            return redirect()->route('products.index');
+        }else {
+            // todo need to show 403 response page
+            return redirect()->back();
+        }
     }
 
     /**

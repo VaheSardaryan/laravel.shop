@@ -11,16 +11,18 @@
                 <td>#</td>
                 <td>Name</td>
                 <td>Description</td>
+                <td>Price</td>
                 <td>Created At</td>
                 <td>Actions</td>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                @foreach($products as $key => $product)
+            @foreach($products as $key => $product)
+                <tr>
                     <td>{{ $key + 1  }}</td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->description }}</td>
+                    <td>{{ $product->price }}</td>
                     <td>{{ $product->created_at }}</td>
                     <td>
                         <a class="btn btn-info" href="{{ route('products.show', ['id' => $product->id]) }}">
@@ -33,8 +35,8 @@
                             Remove
                         </button>
                     </td>
-                @endforeach
-            </tr>
+                </tr>
+            @endforeach
             </tbody>
         </table>
     </div>
