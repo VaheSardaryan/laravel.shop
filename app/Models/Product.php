@@ -12,4 +12,6 @@ class Product extends Model
     public function isProductOf(User $user)  {
         return $this->user_id = $user->id;
     }
+
+
 }

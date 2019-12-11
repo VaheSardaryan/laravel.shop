@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Products\Create;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -35,14 +36,8 @@ class ProductsController extends Controller
      * @param Request $request
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(Create $request)
     {
-        $this->validate($request, [
-            'name' => 'required|min:3|max:191',
-            'description' => 'max:191',
-            'price' => 'required|between:0,9999999.99'
-        ]);
-
         Product::query()->create([
             'user_id' => Auth::id(),
             'name' => $request->get('name'),
@@ -61,8 +56,12 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
+
         $product = Product::query()->findOrFail($id);
-        return view('products.show', compact('product'));
+        if($product->isProductOf(Auth::user())){
+            return view('products.show', compact('product'));
+        }
+
     }
 
     /**
@@ -119,6 +118,15 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product =  Product::query()->findOrFail($id);
+
+        if($product->isProductOf(Auth::user()) ){
+            $product->delete();
+            return redirect()->route('products.index');
+        } else {
+            // todo need to show 403 response page
+            return redirect()->back();
+        }
+
     }
 }

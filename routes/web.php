@@ -25,3 +25,9 @@ Route::group(['middleware' => 'auth'], function ($route){
             '/products' => 'ProductsController'
         ]);
 });
+
+Route::group(['middleware' => ['auth', 'admin'] ], function ($router){
+    $router->get('admin-test', function (){
+       return 123;
+    });
+});

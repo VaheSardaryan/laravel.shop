@@ -2,8 +2,6 @@
 @section('content')
     <div class="container">
         <h1>Edit</h1>
-
-{{--        {{dd($product)}}--}}
         <div class="w-50 mx-auto">
             <form action="{{ route('products.update', [$product->id]) }}" method="POST">
                 @csrf
@@ -15,8 +13,6 @@
                                class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" required
                                placeholder="Please enter product name"
                                value="{{ old('name') ? old('name') : $product->name }}">
-
-                        {{--                        error message for name input--}}
                         <small class="text-danger">{{ $errors->first('name') }}</small>
                     </label>
                 </div>
