@@ -16,5 +16,16 @@
                 Owner = {{Auth::user()->name}}
             </p>
         </div>
+        <div>
+            @if(count($product->comments))
+                @foreach($product->comments as $comment)
+                    <div>
+                        <p>{{ $comment->author->name }}</p>
+                        <p>{{ $comment->content }}</p>
+                        <p>{{ $comment->created_at }}</p>
+                    </div>
+                @endforeach
+            @endif
+        </div>
     </div>
 @endsection

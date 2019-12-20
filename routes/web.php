@@ -16,14 +16,12 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+
 Route::group(['middleware' => 'auth'], function ($route){
-    $route->resources(
-        [
-            '/products' => 'ProductsController'
-        ]);
+    $route->resources(['/products' => 'ProductsController']);
 });
 
 Route::group(['middleware' => ['auth', 'admin'] ], function ($router){
@@ -31,3 +29,4 @@ Route::group(['middleware' => ['auth', 'admin'] ], function ($router){
        return 123;
     });
 });
+Route::get('/main', 'MainController@allProducts')->name('mainPage');
