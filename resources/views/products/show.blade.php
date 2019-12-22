@@ -12,9 +12,11 @@
             <p>
                 Price = {{$product->price}}
             </p>
+{{--            <img src="{{tumbnail}}" style="height: 100%;width: 100%;object-fit: cover;">--}}
             <p>
                 Owner = {{Auth::user()->name}}
             </p>
+            
         </div>
         <div>
             @if(count($product->comments))

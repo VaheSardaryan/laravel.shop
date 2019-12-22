@@ -12,11 +12,20 @@ class Product extends Model
     public function isProductOf(User $user)  {
         return $this->user_id = $user->id;
     }
-    public function comments(){
-        return $this->belongsToMany(Comment::class, 'product_comments', 'product_id', 'comment_id');
+    public function comments()
+    {
+        return $this->belongsToMany(
+            Comment::class,
+            'product_comments',
+            'product_id',
+            'comment_id');
     }
-    public function owner(){
-        return $this->hasOne(User::class, 'id', 'user_id');
+    public function owner()
+    {
+        return $this->hasOne(
+            User::class,
+            'id',
+            'user_id');
     }
 
     public function getThumbnailAttribute()

@@ -29,6 +29,13 @@
                         <input name="price" type="number" step="0.01" class="form-control" required placeholder="Please enter product price">
                     </label>
                 </div>
+                <div class="form-group">
+                    <label class="d-block">
+                        Thumbnail
+                        <input name="thumbnail" type="file" class="form-control" placeholder="Please enter product price">
+                    </label>
+                    <small class="text-danger">{{ $errors->first('thumbnail') }}</small>
+                </div>
                 <button class="btn btn-success" type="submit">Create</button>
             </form>
         </div>

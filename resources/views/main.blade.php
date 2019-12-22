@@ -7,7 +7,8 @@
             @foreach($products as $product)
                 <div class="col-4">
                     <div style="width: 200px; height: 150px;">
-                        <img style="height: 100%; width: 100%; object-fit: cover;" src="{{$product->thumbnail}}">                   </div>
+                        <img style="height: 100%; width: 100%; object-fit: cover;" src="{{$product->thumbnail}}">
+                    </div>
                     <div>
                         <h4> {{$product->name}}</h4>
                     </div>

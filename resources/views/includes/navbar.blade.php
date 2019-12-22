@@ -17,6 +17,15 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
                 @guest
+
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('mainPage') }}">All products</a>
+                    </li>
+
+
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
                     </li>
